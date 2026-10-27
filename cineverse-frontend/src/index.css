@@ -1,0 +1,136 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand: #e50914;
+  --color-brand-dark: #b0060f;
+  --color-brand-light: #ff1a25;
+  --color-bg: #0f172a;
+  --color-bg-elevated: #161f38;
+  --color-bg-card: #1a2440;
+
+  --font-sans: "Inter", "Helvetica Neue", Arial, sans-serif;
+
+  --animate-fade-in: fade-in 0.5s ease-out both;
+  --animate-slide-up: slide-up 0.5s ease-out both;
+  --animate-scale-in: scale-in 0.25s ease-out both;
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes slide-up {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes scale-in {
+    from { opacity: 0; transform: scale(0.96); }
+    to { opacity: 1; transform: scale(1); }
+  }
+}
+
+@layer base {
+  * {
+    @apply border-white/10;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-[#0F172A] text-slate-100 antialiased;
+    font-family: var(--font-sans);
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(229, 9, 20, 0.15), transparent);
+    background-attachment: fixed;
+    color-scheme: dark;
+  }
+  /* Force dark color-scheme on select elements so the native dropdown
+     options list renders with a dark background (matching our theme)
+     rather than the OS default white/light picker. Works in Chromium
+     and Firefox; Safari respects it via the CSS color-scheme property. */
+  select {
+    color-scheme: dark;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0f172a;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #3a4664;
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #e50914;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply relative rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.4)];
+  }
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-[#E50914] px-5 py-2.5 font-semibold text-white
+    transition-all duration-200 hover:bg-[#ff1a25] hover:shadow-[0_0_24px_rgba(229,9,20,0.5)]
+    active:scale-95 disabled:opacity-50 disabled:pointer-events-none
+    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff1a25] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0F172A];
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg border border-white/15 bg-white/[0.06] px-5 py-2.5
+    font-semibold text-white transition-all duration-200 hover:bg-white/[0.12] active:scale-95
+    disabled:opacity-50 disabled:pointer-events-none
+    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0F172A];
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 font-medium text-slate-300
+    transition-colors duration-200 hover:bg-white/[0.08] hover:text-white disabled:opacity-50
+    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0F172A];
+  }
+  .input-field {
+    @apply w-full rounded-lg border border-white/10 bg-white/[0.05] px-4 py-2.5 text-white placeholder-slate-500
+    outline-none transition-colors focus:border-[#E50914] focus:ring-1 focus:ring-[#E50914];
+  }
+  .label-text {
+    @apply mb-1.5 block text-sm font-medium text-slate-300;
+  }
+  .section-heading {
+    @apply text-2xl font-bold tracking-tight text-white sm:text-3xl;
+  }
+  /* Generic focus-visible ring for interactive elements that aren't one
+     of the button variants above (nav links, icon buttons, table row
+     actions) -- keyboard users need a visible focus indicator
+     everywhere, not just on primary actions. */
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E50914] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b1224];
+  }
+
+  /* Premium stat/metric card: combine with glass-card in the JSX
+     (className="glass-card metric-card") for a subtle lift + brighter
+     border on hover, so dashboards feel tactile rather than static. */
+  .metric-card {
+    @apply p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-white/20 hover:shadow-[0_12px_40px_rgba(0,0,0,0.5)];
+  }
+  /* The colored rounded-square icon badge used in metric cards and
+     section headers. `tone` is applied via a modifier class the
+     caller adds alongside this one (e.g. icon-badge-brand). */
+  .icon-badge {
+    @apply flex h-10 w-10 items-center justify-center rounded-xl;
+  }
+  .icon-badge-brand { @apply bg-[#E50914]/15 text-[#ff4d55]; }
+  .icon-badge-success { @apply bg-emerald-500/15 text-emerald-400; }
+  .icon-badge-info { @apply bg-sky-500/15 text-sky-400; }
+  .icon-badge-warning { @apply bg-amber-500/15 text-amber-400; }
+  .icon-badge-violet { @apply bg-violet-500/15 text-violet-400; }
+
+  /* Small colored trend/delta pill (e.g. "+12.5%"). Purely
+     presentational -- callers must pass a real, backend-derived
+     value; never used to fabricate a number. */
+  .trend-pill {
+    @apply inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-semibold;
+  }
+  .trend-pill-up { @apply bg-emerald-500/15 text-emerald-400; }
+  .trend-pill-down { @apply bg-red-500/15 text-red-400; }
+  .trend-pill-neutral { @apply bg-white/10 text-slate-300; }
+}

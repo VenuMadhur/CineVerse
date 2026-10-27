@@ -1,0 +1,44 @@
+
+# Secrets
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+env/
+
+# Node.js
+node_modules/
+dist/
+
+# IDE and logs
+.vscode/
+.idea/
+*.log
+
+# Temporary files and test output
+scratch/
+pytest_output.txt
+
+# Private files
+Password.docx
+
+
+# Temporary backend debugging scripts
+/cineverse-backend/debug_cust.py
+/cineverse-backend/test_script.py
+/cineverse-backend/test_script_admin.py
+
+# Accidental nested frontend folder inside backend
+/cineverse-backend/cineverse-frontend/
+
