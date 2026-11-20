@@ -59,3 +59,11 @@ def root():
         "docs": "/docs",
         "api_prefix": settings.API_V1_PREFIX,
     }
+
+
+@app.get("/health", tags=["Health"])
+def health_check():
+    return {
+        "status": "healthy",
+        "service": settings.APP_NAME
+    }
