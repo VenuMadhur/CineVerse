@@ -12,6 +12,7 @@ __pycache__/
 # Tests cache
 .pytest_cache/
 .coverage
+.coverage.*
 htmlcov/
 
 # Virtual environments
@@ -34,3 +35,15 @@ env/
 node_modules/
 dist/
 scratch/
+
+# Local databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Generated files
+storage/invoices/
+
+# Python packaging
+build/
+*.egg-info/

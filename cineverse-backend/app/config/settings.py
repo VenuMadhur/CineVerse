@@ -35,6 +35,7 @@ class Settings(BaseSettings):
     REFRESH_TOKEN_EXPIRE_MINUTES: int = 10080
 
     # ---- Redis / Celery ----
+    REDIS_URL: Optional[str] = None
     REDIS_HOST: str = "redis"
     REDIS_PORT: int = 6379
     REDIS_DB: int = 0

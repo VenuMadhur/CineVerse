@@ -22,14 +22,22 @@ from app.exceptions.custom_exceptions import RateLimitExceededException
 
 logger = get_logger(__name__)
 
-_redis_client = redis.Redis(
-    host=settings.REDIS_HOST,
-    port=settings.REDIS_PORT,
-    db=settings.REDIS_DB,
-    socket_connect_timeout=2,
-    socket_timeout=2,
-    decode_responses=True,
-)
+if settings.REDIS_URL:
+    _redis_client = redis.Redis.from_url(
+        settings.REDIS_URL,
+        socket_connect_timeout=2,
+        socket_timeout=2,
+        decode_responses=True,
+    )
+else:
+    _redis_client = redis.Redis(
+        host=settings.REDIS_HOST,
+        port=settings.REDIS_PORT,
+        db=settings.REDIS_DB,
+        socket_connect_timeout=2,
+        socket_timeout=2,
+        decode_responses=True,
+    )
 
 
 def get_client_ip(request: Request) -> str:
